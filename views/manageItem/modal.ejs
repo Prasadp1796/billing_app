@@ -1,0 +1,112 @@
+<script type="text/ng-template" id="modal.html">
+    <div id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+        <div class="modal-header bg-info">
+            <h4 id="exampleModalLabel" ng-if="item.mode === 'add'" class="modal-title text-white">Add Item</h4>
+            <h4 id="exampleModalLabel" ng-if="item.mode === 'edit'" class="modal-title text-white">Edit Item</h4>
+            <button type="button" item-dismiss="modal" aria-label="Close" class="close text-light"
+                    ng-click="close()"><span
+                        aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body" ng-cloak>
+            <div class="px-3">
+                <form name="itemForm">
+                    <div class="col-12">
+                        <div class="alert alert-danger alert-dismissible" role="alert"
+                             ng-repeat="message in errorMessages">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                            {{message}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label>Item Name</label>
+                            <input class="form-control" type="text" name="ItemName" ng-model="item.ItemName"
+                                   placeholder="First Name" ng-minlength="3" required>
+                            <div ng-messages="itemForm.ItemName.$error" style="color:red"
+                                 ng-if="itemForm.ItemName.$touched"
+                                 role="alert">
+                                <div ng-message="required">Please Enter Item Name</div>
+                                <div ng-message="minlength">Item Name is too short</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                        <div class="form-group col-6">
+                            <label>Qauntity</label>
+                            <input class="form-control" type="text" name="QuantityNumber"
+                                   ng-model="item.QuantityNumber"
+                                   placeholder="Quantity Number" 
+                                   ng-minlength="3" required>
+
+                            <div ng-messages="itemForm.QuantityNumber.$error" style="color:red"
+                                 ng-if="itemForm.QuantityNumber.$touched"
+                                 role="alert">
+                                <div ng-message="required">Please Enter Quantity Number</div>
+                                <div ng-message="pattern">Please Enter Valid Quantity Number</div>
+                            </div>
+                        </div>
+
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label>Unit</label>
+                            <input class="form-control" type="text" name=ItemUnit" ng-model="item.ItemUnit"
+                                   placeholder="Unit"  required>
+                            <div ng-messages="itemForm.ItemUnit.$error" style="color:red"
+                                 ng-if="itemForm.ItemUnit.$touched"
+                                 role="alert">
+                                <div ng-message="required">Please Enter Item Unit</div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label>Rate</label>
+                            <input class="form-control" type="text" name="ItemRate" ng-model="item.ItemRate"
+                                   placeholder="Rate"  required>
+                            <div ng-messages="itemForm.ItemRate.$error" style="color:red"
+                                 ng-if="itemForm.ItemRate.$touched"
+                                 role="alert">
+                                <div ng-message="required">Please Enter Item Name</div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label>HSNCode</label>
+                            <input class="form-control" type="text" name="ItemHSNCode" ng-model="item.ItemHSNCode"
+                                   placeholder="HSNCode" ng-minlength="3" required>
+                            <div ng-messages="itemForm.ItemHSNCode.$error" style="color:red"
+                                 ng-if="itemForm.ItemHSNCode.$touched"
+                                 role="alert">
+                                <div ng-message="required">Please Enter Item Name</div>
+                                <div ng-message="minlength">Item HSNCode is too short</div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer bg-light">
+        <button type="button" class="btn btn-raised btn-primary" ng-if="item.mode=='add'"
+                ng-disabled="!itemForm.$valid || isPosting" ng-click="addNewItem()">
+            <i class="fa fa-save"></i> Add Item
+        </button>
+        <button type="button" class="btn btn-raised btn-warning" ng-if="item.mode=='edit'"
+                ng-disabled="!itemForm.$valid " ng-click="editItem()">
+            <i class="fa fa-edit"></i> Edit Item
+        </button>
+        <button type="button" data-dismiss="modal" class="btn btn-raised btn-danger" ng-click="close()"><i
+                    class="fa fa-times"></i> Close
+        </button>
+    </div>
+</script>
+
+

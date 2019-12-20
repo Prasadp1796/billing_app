@@ -1,0 +1,25 @@
+{
+  "name": "billingapp",
+  "version": "0.0.0",
+  "private": true,
+  "developer": {
+    "Name": "Prasad Potdar",
+    "Email": "potdar963.pp@gmail.com"
+  },
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "bootstrap": "^4.4.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "lodash": "^4.17.15",
+    "mongoose": "^5.8.1",
+    "mongoose-unique-validator": "^2.0.3",
+    "morgan": "~1.9.1",
+    "ngx": "^2.4.0"
+  }
+}

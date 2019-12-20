@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<% include ../partials/head.ejs %>
+
+<body id="page-top" ng-app="manageCustomersApp" ng-controller="manageCustomersAppCtrlr" ng-init="initController()"
+      ng-cloak>
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <% include ../partials/sidebar.ejs %>
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <% include ../partials/topbar.ejs %>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+
+                <div class="row">
+
+                    <!-- Area Chart -->
+                    <div class="col-xl-12 col-lg-7">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div class="container-fluid">
+                                <div class="row mt-4">
+                                    <div class="col text-right">
+                                        <button type="button" class="btn btn-primary" ng-click="openModal('add')">
+                                            <i class="fa fa-plus"></i> Add Customer
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="table-responsive">
+                                        <table st-table="displayedCollection" st-safe-src="customersList"
+                                               id="smart-table"
+                                               class="table table-hover table-center table-sm table-bordered table-striped text-center text-nowrap">
+                                            <thead>
+                                            <tr>
+                                                <th st-sort="CustomerName" class="sortable asc">Customer Name</th>
+                                                <th st-sort="EmailID" class="sortable asc">Email ID</th>
+                                                <th st-sort="ContactNumber" class="sortable asc">Contact Number</th>
+                                                <th st-sort="ContactCity" class="sortable asc">City</th>
+                                                <th st-sort="ContactState" class="sortable asc">State</th>
+                                                <th>Settings</th>
+                                            </tr>
+                                            <tr class="bg-light">
+                                                <td>
+                                                    <input type="text" st-search="CustomerName"
+                                                           placeholder="Search"
+                                                           class="input-sm form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="text" st-search="EmailID"
+                                                           placeholder="Search EmailID"
+                                                           class="input-sm form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="text" st-search="ContactNumber"
+                                                           placeholder="Search"
+                                                           class="input-sm form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="text" st-search="ContactCity"
+                                                           placeholder="Search"
+                                                           class="input-sm form-control">
+                                                </td>
+                                                <td>
+                                                    <input type="text" st-search="ContactState"
+                                                           placeholder="Search"
+                                                           class="input-sm form-control">
+                                                </td>
+
+
+                                                <td></td>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="text-center" colspan="13" ng-if="loading">
+                                                    <div class="loader">Loading...</div>
+                                                    <h6>Loading...</h6>
+                                                </td>
+                                            </tr>
+                                            <tr class="no-records-found" ng-if="customerList.length == 0">
+                                                <td colspan="13">No matching records found</td>
+                                            </tr>
+                                            <tr st-select-row="row" st-select-mode="multiple"
+                                                ng-repeat="customer in displayedCollection |filter: searchData"
+                                                ng-cloak>
+                                                <td>{{customer.CustomerName}}</td>
+                                                <td>{{customer.EmailID}}</td>
+                                                <td>{{customer.ContactNumber}}</td>
+                                                <td>{{customer.CustomerCity}}</td>
+                                                <td>{{customer.CustomerState}}</td>
+                                                <td>
+                                                    <button class="btn btn-xl"
+                                                            ng-click="openModal('edit', customer, $index)"
+                                                            style="border: 0.5px solid;border-radius: 30px;"><i
+                                                                class="fa fa-edit text-success" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button class="btn btn-xl"
+                                                            ng-click="deleteCustomer(customer.CustomerID, customer.CustomerName, $index)"
+                                                            style="border: 0.5px solid;border-radius: 30px"><i
+                                                                class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <% include ../partials/footer.ejs %>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+
+
+<!-- Logout Modal-->
+<% include ../partials/logout.ejs %>
+
+<% include modal.ejs %>
+
+<!-- Bootstrap core JavaScript-->
+<% include ../partials/bodyScriptLoader.ejs %>
+
+<script>
+    <% include ng-app.js %>
+</script>
+
+</body>
+
+</html>

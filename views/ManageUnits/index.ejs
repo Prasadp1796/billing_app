@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Manage Units</title>
+    <% include ../partials/head.ejs %>
+</head>
+
+<body id="page-top" ng-app="manageUnitsApp" ng-controller="manageUnitsAppCtrlr" ng-init="init()" ng-cloak>
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <% include ../partials/sidebar.ejs %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <% include ../partials/topbar.ejs %>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <div class="card">
+                    <div class="card-header bg-info">
+                        <h4 class="h3 mb-1 text-white">Manage Units</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col text-right">
+                                <button class="btn btn-primary" ng-click="openModal('add')"><i class="fa fa-plus"></i>
+                                    &nbsp;Add Unit
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="table-responsive">
+                                <table st-table="displayedCollection" st-safe-src="unitsList"
+                                       id="smart-table"
+                                       class="table table-hover table-center table-sm table-bordered table-striped text-center text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <td>Sr. No.</td>
+                                        <th st-sort="Name" class="sortable asc">Unit Name</th>
+                                        <th>Settings</th>
+                                    </tr>
+                                    <tr class="bg-light">
+                                        <td></td>
+                                        <td>
+                                            <input type="text" st-search="Name"
+                                                   placeholder="Search"
+                                                   class="input-sm form-control">
+                                        </td>
+                                        <td></td>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="text-center" colspan="13" ng-if="loading">
+                                            <div class="loader">Loading...</div>
+                                            <h6>Loading...</h6>
+                                        </td>
+                                    </tr>
+                                    <tr class="no-records-found" ng-if="customerList.length == 0">
+                                        <td colspan="13">No matching records found</td>
+                                    </tr>
+                                    <tr st-select-row="row" st-select-mode="multiple"
+                                        ng-repeat="unit in displayedCollection"
+                                        ng-cloak>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{unit.Name}}</td>
+                                        <td>
+                                            <button class="btn btn-xl"
+                                                    ng-click="openModal('edit', unit)"
+                                                    style="border: 0.5px solid;border-radius: 30px;"><i
+                                                        class="fa fa-edit text-success" aria-hidden="true"></i>
+                                            </button>
+                                            <button class="btn btn-xl"
+                                                    ng-click="deleteCustomer(customer.CustomerID, customer.CustomerName, $index)"
+                                                    style="border: 0.5px solid;border-radius: 30px"><i
+                                                        class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <% include ../partials/footer.ejs %>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<% include ../partials/logout.ejs %>
+
+<% include ../partials/bodyScriptLoader.ejs %>
+<script>
+    <% include ng-app.js %>
+</script>
+<% include modal.ejs %>
+</body>
+
+</html>

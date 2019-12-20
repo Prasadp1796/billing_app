@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<% include ../partials/head.ejs%>
+
+<body id="page-top" ng-app="manageItemsApp" ng-controller="manageItemsAppCtrlr" ng-init="initController()" ng-cloak>
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <%include ../partials/sidebar.ejs%>
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <%include ../partials/topbar.ejs%>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+
+
+
+
+                <div class="row">
+
+                    <!-- Area Chart -->
+                    <div class="col-xl-12 col-lg-7">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col text-right">
+                                        <button type="button" class="btn btn-primary" ng-click="openModal('add')">
+                                            <i class="fa fa-plus"></i>  Add Item
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="table-responsive">
+                                        <table st-table="displayedCollection" st-safe-src="itemsList" id="smart-table"
+                                               class="table table-hover table-center table-sm table-bordered table-striped text-center text-nowrap">
+                                            <thead>
+                                            <tr>
+                                                <th st-sort="ItemName" class="sortable asc">Item Name</th>
+                                                <th st-sort="ItemQuantity" class="sortable asc">Quantity</th>
+                                                <th st-sort="ItemUnit" class="sortable asc">Unit</th>
+                                                <th st-sort="ItemRate" class="sortable asc">Rate</th>
+                                                <th st-sort="ItemHSNCode" class="sortable asc">HSNCode</th>
+
+
+                                                <th>Settings</th>
+                                            </tr>
+                                            <tr class="bg-light">
+                                                <td>
+                                                    <input type="text" st-search="ItemName"
+                                                           placeholder="Search"
+                                                           class="input-sm form-control">
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                    <input type="text" st-search="ItemHSNCode"
+                                                           placeholder="Search"
+                                                           class="input-sm form-control">
+                                                </td>
+                                                <td></td>
+
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="text-center" colspan="13" ng-if="loading">
+                                                    <div class="loader">Loading...</div>
+                                                    <h6>Loading...</h6>
+                                                </td>
+                                            </tr>
+                                            <tr class="no-records-found" ng-if="itemList.length == 0">
+                                                <td colspan="13">No matching records found</td>
+                                            </tr>
+                                            <tr st-select-row="row" st-select-mode="multiple"
+                                                ng-repeat="item in displayedCollection |filter: searchData" ng-cloak>
+                                                <td>{{item.ItemName}}</td>
+                                                <td>{{item.ItemQuantity}}</td>
+                                                <td>{{item.ItemUnit}}</td>
+                                                <td>{{item.ItemRate}}</td>
+                                                <td>{{item.ItemHSNCode}}</td>
+
+
+                                                <td>
+                                                    <button class="btn btn-xl" ng-click="openModal('edit', item, $index)"
+                                                            style="border: 0.5px solid;border-radius: 30px;"><i
+                                                                class="fa fa-edit text-success" aria-hidden="true"></i></button>
+                                                    <button class="btn btn-xl" ng-click="deleteItem(item.ItemID, item.ItemName, $index)"
+                                                            style="border: 0.5px solid;border-radius: 30px"><i
+                                                                class="fa fa-trash text-danger" aria-hidden="true"></i></button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            <tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <%include ../partials/footer.ejs%>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+
+<%include modal.ejs%>
+<script><%include ng-app.js%></script>
+<!-- Bootstrap core JavaScript-->
+<%include ../partials/bodyScriptLoader.ejs%>
+
+</body>
+
+</html>
