@@ -3,9 +3,9 @@ const validator = require('mongoose-unique-validator');
 const AutoIncrement = require('../lib/auto_increment')(mongoose);
 
 var itemSchema = mongoose.Schema({
-    itemName: {type: String, unique: "customer With Same itemName Already Exist"},
+    Name: {type: String, unique: "customer With Same itemName Already Exist"},
     Quantity:{type:Number},
-    Unit:{type: String},
+    UnitID:{type: Number},
     Rate:{type:Number},
     HSNCode:{type:String}
 
@@ -16,11 +16,11 @@ itemSchema.plugin(validator);
 
 //Add Auto Increment To Event ID
 itemSchema.plugin(AutoIncrement, {
-    modelName: 'customer',
+    modelName: 'items',
     type: Number,
     unique: true,
-    fieldName: 'customerID'
+    fieldName: 'ItemID'
 });
 
 
-module.exports = mongoose.model('item', itemSchema);
+module.exports = mongoose.model('items', itemSchema);

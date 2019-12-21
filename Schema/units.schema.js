@@ -3,7 +3,8 @@ const validator = require('mongoose-unique-validator');
 const AutoIncrement = require('../lib/auto_increment')(mongoose);
 
 var unitSchema = mongoose.Schema({
-    Name: {type: "String", unique: "The Unit With Same Name Already Exist"}
+    Name: {type: "String", unique: "The Unit With Same Name Already Exist"},
+    Symbol: {type: "String"}
 });
 
 //Validate Data

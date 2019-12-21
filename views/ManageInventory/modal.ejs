@@ -22,10 +22,10 @@
                     <div class="form-row">
                         <div class="form-group col-12">
                             <label>Item Name</label>
-                            <input class="form-control" type="text" name="ItemName" ng-model="item.ItemName"
-                                   placeholder="First Name" ng-minlength="3" required>
-                            <div ng-messages="itemForm.ItemName.$error" style="color:red"
-                                 ng-if="itemForm.ItemName.$touched"
+                            <input class="form-control" type="text" name="Name" ng-model="item.Name"
+                                   placeholder="Item Name" ng-minlength="3" required>
+                            <div ng-messages="itemForm.Name.$error" style="color:red"
+                                 ng-if="itemForm.Name.$touched"
                                  role="alert">
                                 <div ng-message="required">Please Enter Item Name</div>
                                 <div ng-message="minlength">Item Name is too short</div>
@@ -34,70 +34,60 @@
 
                         <div class="form-group col-6">
                             <label>Rate</label>
-                            <input class="form-control" type="text" name="ItemRate" ng-model="item.ItemRate"
-                                   placeholder="Rate"  required>
-                            <div ng-messages="itemForm.ItemRate.$error" style="color:red"
-                                 ng-if="itemForm.ItemRate.$touched"
+                            <input class="form-control" type="number" name="Rate" ng-model="item.Rate"
+                                   placeholder="Rate" required>
+                            <div ng-messages="itemForm.Rate.$error" style="color:red"
+                                 ng-if="itemForm.Rate.$touched"
                                  role="alert">
-                                <div ng-message="required">Please Enter Item Name</div>
+                                <div ng-message="required">Please Enter Item Rate</div>
 
                             </div>
                         </div>
 
                         <div class="form-group col-6">
                             <label>HSNCode</label>
-                            <input class="form-control" type="text" name="ItemHSNCode" ng-model="item.ItemHSNCode"
+                            <input class="form-control" type="text" name="HSNCode" ng-model="item.HSNCode"
                                    placeholder="HSNCode" ng-minlength="3" required>
-                            <div ng-messages="itemForm.ItemHSNCode.$error" style="color:red"
-                                 ng-if="itemForm.ItemHSNCode.$touched"
+                            <div ng-messages="itemForm.HSNCode.$error" style="color:red"
+                                 ng-if="itemForm.HSNCode.$touched"
                                  role="alert">
-                                <div ng-message="required">Please Enter Item Name</div>
+                                <div ng-message="required">Please Enter Item HSNCode</div>
                                 <div ng-message="minlength">Item HSNCode is too short</div>
                             </div>
                         </div>
                         <div class="form-group col-6">
                             <label>Qauntity</label>
-                            <input class="form-control" type="text" name="QuantityNumber"
-                                   ng-model="item.QuantityNumber"
-                                   placeholder="Quantity Number"
-                                   ng-minlength="3" required>
+                            <input class="form-control" type="number" name="Quantity"
+                                   ng-model="item.Quantity"
+                                   placeholder="Quantity Number" required>
 
-                            <div ng-messages="itemForm.QuantityNumber.$error" style="color:red"
-                                 ng-if="itemForm.QuantityNumber.$touched"
+                            <div ng-messages="itemForm.Quantity.$error" style="color:red"
+                                 ng-if="itemForm.Quantity.$touched"
                                  role="alert">
-                                <div ng-message="required">Please Enter Quantity Number</div>
-                                <div ng-message="pattern">Please Enter Valid Quantity Number</div>
+                                <div ng-message="required">Please Enter Quantity</div>
                             </div>
                         </div>
 
                         <div class="form-group col-6">
                             <label>Unit</label>
-                            <input class="form-control" type="text" name=ItemUnit" ng-model="item.ItemUnit"
-                                   placeholder="Unit"  required>
-                            <div ng-messages="itemForm.ItemUnit.$error" style="color:red"
-                                 ng-if="itemForm.ItemUnit.$touched"
+                            <select class="form-control" name="UnitID" ng-model="item.UnitID"
+                                    ng-options="unit.UnitID as unit.Name for unit in unitsList" required>
+                                <option value="" disabled>---Select Unit---</option>
+                            </select>
+                            <div ng-messages="itemForm.UnitID.$error" style="color:red"
+                                 ng-if="itemForm.UnitID.$touched"
                                  role="alert">
-                                <div ng-message="required">Please Enter Item Unit</div>
-
+                                <div ng-message="required">Please Select Item Unit</div>
                             </div>
                         </div>
-
-
                     </div>
-
-
-
-
-
-
-
                 </form>
             </div>
         </div>
     </div>
     <div class="modal-footer bg-light">
         <button type="button" class="btn btn-raised btn-primary" ng-if="item.mode=='add'"
-                ng-disabled="!itemForm.$valid || isPosting" ng-click="addNewItem()">
+                ng-disabled="!itemForm.$valid" ng-click="addNewItem()">
             <i class="fa fa-save"></i> Add Item
         </button>
         <button type="button" class="btn btn-raised btn-warning" ng-if="item.mode=='edit'"

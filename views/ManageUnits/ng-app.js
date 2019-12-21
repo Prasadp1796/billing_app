@@ -9,12 +9,12 @@ app.controller('manageUnitsAppCtrlr', ["$scope", "$http", "$uibModal", function 
 
     //Method To Get Units List
     $scope.getUnitsList = function () {
-      $http.get('/manageUnits/getUnits').then(function (res) {
-          if(res.status  === 500)
-              alertify.error("Something Went Wrong While Getting Units List");
-          else
-              $scope.unitsList = res.data;
-      })
+        $http.get('/manageUnits/getUnits').then(function (res) {
+            if (res.status === 500)
+                alertify.error("Something Went Wrong While Getting Units List");
+            else
+                $scope.unitsList = res.data;
+        })
     };
 
     //Method To Open Add/Edit Item Modal
@@ -40,28 +40,66 @@ app.controller('manageUnitsAppCtrlr', ["$scope", "$http", "$uibModal", function 
             }
         });
     };
+    
+    //Method To Delete Unit
+    $scope.deleteUnit = function (unitId) {
+      alertify.confirm("Do you really want to delete this unit?", function () {
+          $http.get('/manageUnits/deleteUnit?UnitID='+unitId).then(function (res) {
+              if(res.status === 500)
+                  alertify.error("Something Went Wrong While Deleting Unit");
+              else{
+                  alertify.success("Unit Deleted Successfully");
+                  $scope.getUnitsList();
+              }
+          })
+      })
+    };
 }]);
 
 //Controller For Managing Item Details
-app.controller('manageItemDetails', ["$scope", "$http", "record" , function ($scope, $http, record) {
+app.controller('manageItemDetails', ["$scope", "$http", "record", function ($scope, $http, record) {
 
     //Method To Initialize Controller
-    function init(){
+    function init() {
         $scope.unit = record;
     }
+
     init();
 
     //Method To Add New Unit
     $scope.addNewUnit = function () {
-      $http.post('/manageUnits/addNewUnit', $scope.unit).then(function (res) {
-          if(res.status === 500)
-              alertify.error("Something Went Wrong While Adding New Unit");
-          else{
-              alertify.success("Unit Added Successfully...");
-              $scope.close();
-              $scope.getUnitsList();
-          }
-      })
+        $scope.isPosting = true;
+        $http.post('/manageUnits/addNewUnit', $scope.unit).then(function (res) {
+            if (res.status === 500)
+                alertify.error("Something Went Wrong While Adding New Unit");
+            else if (res.status === 201) {
+                $scope.isPosting = false;
+                alertify.success("Unit Added Successfully...");
+                 $scope.close();
+                $scope.getUnitsList();
+            } else {
+                $scope.isPosting = false;
+                $scope.errorMessages = res.data.message;
+            }
+        });
+    };
+
+    //Method To Edit Unit Details
+    $scope.editUnit = function () {
+        $scope.isPosting = true;
+        $http.post('/manageUnits/editUnit', $scope.unit).then(function (res) {
+            if (res.status === 500)
+                alertify.error("Something Went Wrong While Updating Unit Details");
+            else if (res.status === 201) {
+                $scope.isPosting = false;
+                alertify.success("Unit Details Updated Successfully...");
+                $scope.close();
+                $scope.getUnitsList();
+            } else {
+                $scope.isPosting = false;
+                $scope.errorMessages = res.data.message;
+            }
+        });
     };
 
     //Method To Close Modal

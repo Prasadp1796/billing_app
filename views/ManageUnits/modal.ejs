@@ -31,7 +31,17 @@
                                 <div ng-message="minlength">Unit Name is too short</div>
                             </div>
                         </div>
-
+                        <div class="form-group col-12">
+                            <label>Unit Symbol</label>
+                            <input class="form-control" type="text" name="Symbol" ng-model="unit.Symbol"
+                                   placeholder="Unit Symbol" ng-maxlength="3" required>
+                            <div ng-messages="unitForm.Symbol.$error" style="color:red"
+                                 ng-if="unitForm.Symbol.$touched"
+                                 role="alert">
+                                <div ng-message="required">Please Enter Unit Symbol</div>
+                                <div ng-message="minlength">Unit Symbol is too long</div>
+                            </div>
+                        </div>
 
                     </div>
 
@@ -46,7 +56,7 @@
             <i class="fa fa-save"></i> Add Unit
         </button>
         <button type="button" class="btn btn-raised btn-warning" ng-if="unit.mode=='edit'"
-                ng-disabled="!unitForm.$valid " ng-click="editUnit()">
+                ng-disabled="!unitForm.$valid || isPosting " ng-click="editUnit()">
             <i class="fa fa-edit"></i> Edit Unit
         </button>
         <button type="button" data-dismiss="modal" class="btn btn-raised btn-danger" ng-click="close()"><i

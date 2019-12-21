@@ -28,7 +28,7 @@
             <div class="container-fluid">
 
                 <div class="card">
-                    <div class="card-header bg-info">
+                    <div class="card-header bg-gradient-primary">
                         <h4 class="h3 mb-1 text-white">Manage Units</h4>
                     </div>
                     <div class="card-body">
@@ -48,12 +48,18 @@
                                     <tr>
                                         <td>Sr. No.</td>
                                         <th st-sort="Name" class="sortable asc">Unit Name</th>
+                                        <th st-sort="Symbol" class="sortable asc">Unit Symbol</th>
                                         <th>Settings</th>
                                     </tr>
                                     <tr class="bg-light">
                                         <td></td>
                                         <td>
                                             <input type="text" st-search="Name"
+                                                   placeholder="Search"
+                                                   class="input-sm form-control">
+                                        </td>
+                                        <td>
+                                            <input type="text" st-search="Symbol"
                                                    placeholder="Search"
                                                    class="input-sm form-control">
                                         </td>
@@ -76,6 +82,7 @@
                                         ng-cloak>
                                         <td>{{$index+1}}</td>
                                         <td>{{unit.Name}}</td>
+                                        <td>{{unit.Symbol}}</td>
                                         <td>
                                             <button class="btn btn-xl"
                                                     ng-click="openModal('edit', unit)"
@@ -83,7 +90,7 @@
                                                         class="fa fa-edit text-success" aria-hidden="true"></i>
                                             </button>
                                             <button class="btn btn-xl"
-                                                    ng-click="deleteCustomer(customer.CustomerID, customer.CustomerName, $index)"
+                                                    ng-click="deleteUnit(unit.UnitID)"
                                                     style="border: 0.5px solid;border-radius: 30px"><i
                                                         class="fa fa-trash text-danger" aria-hidden="true"></i>
                                             </button>

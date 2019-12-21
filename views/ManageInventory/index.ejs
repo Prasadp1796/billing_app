@@ -5,7 +5,7 @@
     <% include ../partials/head.ejs%>
 </head>
 
-<body id="page-top" ng-app="manageInventoryApp" ng-controller="manageInventoryAppCtrlr" ng-cloak>
+<body id="page-top" ng-app="manageInventoryApp" ng-controller="manageInventoryAppCtrlr" ng-init="init()" ng-cloak>
 
 <!-- Page Wrapper -->
 <div id="wrapper">
@@ -37,8 +37,76 @@
                                 <button class="btn btn-primary" ng-click="openModal('add')"><i class="fa fa-plus"></i> &nbsp;Add Item</button>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="table-responsive"></div>
+                        <div class="row mt-4">
+                            <div class="table-responsive">
+                                <table st-table="displayedCollection" st-safe-src="itemsList"
+                                       id="smart-table"
+                                       class="table table-hover table-center table-sm table-bordered table-striped text-center text-nowrap">
+                                    <thead>
+                                    <tr>
+                                        <td>Sr. No.</td>
+                                        <th st-sort="Name" class="sortable asc">Item Name</th>
+                                        <th st-sort="HSNCode" class="sortable asc">HSNCode</th>
+                                        <th st-sort="Rate" class="sortable asc">Rate</th>
+                                        <th st-sort="Quantity" class="sortable asc">Quantity</th>
+                                        <th st-sort="UnitName" class="sortable asc">Unit</th>
+                                        <th>Settings</th>
+                                    </tr>
+                                    <tr class="bg-light">
+                                        <td></td>
+                                        <td>
+                                            <input type="text" st-search="Name"
+                                                   placeholder="Search"
+                                                   class="input-sm form-control">
+                                        </td>
+                                        <td>
+                                            <input type="text" st-search="Symbol"
+                                                   placeholder="Search"
+                                                   class="input-sm form-control">
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="text-center" colspan="13" ng-if="loading">
+                                            <div class="loader">Loading...</div>
+                                            <h6>Loading...</h6>
+                                        </td>
+                                    </tr>
+                                    <tr class="no-records-found" ng-if="customerList.length == 0">
+                                        <td colspan="13">No matching records found</td>
+                                    </tr>
+                                    <tr st-select-row="row" st-select-mode="multiple"
+                                        ng-repeat="item in displayedCollection"
+                                        ng-cloak>
+                                        <td>{{$index+1}}</td>
+                                        <td>{{item.Name}}</td>
+                                        <td>{{item.HSNCode}}</td>
+                                        <td> ₹{{item.Rate}}/-e</td>
+                                        <td>{{item.Quantity}}</td>
+                                        <td>{{item.UnitName}}({{item.UnitSymbol}})</td>
+                                        <td>
+                                            <button class="btn btn-xl"
+                                                    ng-click="openModal('edit', item)"
+                                                    style="border: 0.5px solid;border-radius: 30px;"><i
+                                                        class="fa fa-edit text-success" aria-hidden="true"></i>
+                                            </button>
+                                            <button class="btn btn-xl"
+                                                    ng-click="deleteItem(item.ItemID)"
+                                                    style="border: 0.5px solid;border-radius: 30px"><i
+                                                        class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

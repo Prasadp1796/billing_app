@@ -11,8 +11,20 @@ router.get('/manageUnits', function (req, res) {
 router.post('/manageUnits/addNewUnit', function (req, res) {
     let newUnit = new unitSchema(req.body);
     newUnit.save(function (err) {
-        if (err)
-            res.sendStatus(500);
+        if (err) {
+            if (err.name == 'ValidationError') {
+                var errorMessages = err.message.replace("units validation failed:", "");
+                errorMessages = errorMessages.split(',');
+                for (var i = 0; i < errorMessages.length; i++) {
+                    errorMessages[i] = errorMessages[i].split(':')[1];
+                }
+                // errorMessages = errorMessages.join(',');
+                res.status(200).send({message: errorMessages});
+            } else {
+                res.sendStatus(500);
+            }
+        }
+
         else
             res.sendStatus(201);
     });
@@ -28,5 +40,36 @@ router.get('/manageUnits/getUnits', function (req, res) {
     })
 });
 
+//Method To Update Unit Details --{Update Operation]
+router.post('/manageUnits/editUnit', function (req, res) {
+    unitSchema.findOneAndUpdate({UnitID: req.body.UnitID}, {$set: req.body}, {
+        runValidators: true,
+        context: 'query'
+    }, function (err) {
+        if (err) {
+            if (err.name == 'ValidationError') {
+                var errorMessages = err.message.replace("Validation failed:", "");
+                errorMessages = errorMessages.split(',');
+                for (var i = 0; i < errorMessages.length; i++) {
+                    errorMessages[i] = errorMessages[i].split(':')[1];
+                }
+                res.status(200).send({message: errorMessages});
+            } else {
+                res.sendStatus(500);
+            }
+        } else
+            res.sendStatus(201);
+    })
+});
+
+//Method To Delete Unit --[Delete Operation]
+router.get('/manageUnits/deleteUnit', function (req, res) {
+    unitSchema.findOneAndDelete({UnitID: parseInt(req.query.UnitID)}, function (err) {
+        if (err)
+            res.sendStatus(500);
+        else
+            res.sendStatus(200);
+    })
+});
 
 module.exports = router;
