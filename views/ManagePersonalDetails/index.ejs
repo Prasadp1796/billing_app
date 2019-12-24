@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Manage Personal Details</title>
+    <% include ../partials/head.ejs %>
+</head>
+
+<body id="page-top" ng-app="managePersonalDetailsApp" ng-controller="managePersonalDetailsAppCtrlr" ng-init="init()">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <% include ../partials/sidebar.ejs %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <% include ../partials/topbar.ejs %>
+            <!-- End of Topbar -->
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <div class="container-fluid">
+
+                    <div class="card">
+                        <div class="card-header bg-gradient-primary">
+                            <h4 class="h3 mb-1 text-white">Manage Personal Details</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="container">
+                                <form name="form">
+                                    <div class="form-row">
+                                        <div class="form-group col-12">
+                                            <label>Shop Name</label>
+                                            <input type="text" class="form-control" name="ShopName"
+                                                   ng-model="data.ShopName" ng-minlength="3" required>
+                                            <div ng-messages="form.ShopName.$error" style="color:red"
+                                                 ng-if="form.ShopName.$touched"
+                                                 role="alert">
+                                                <div ng-message="required">Please Enter Owner Name</div>
+                                                <div ng-message="minlength">Owner Name is too long</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-12">
+                                            <label>Owner Name</label>
+                                            <input type="text" class="form-control" name="OwnerName"
+                                                   ng-model="data.OwnerName" ng-minlength="3" required>
+                                            <div ng-messages="form.OwnerName.$error" style="color:red"
+                                                 ng-if="form.OwnerName.$touched"
+                                                 role="alert">
+                                                <div ng-message="required">Please Enter Owner Name</div>
+                                                <div ng-message="minlength">Owner Name is too long</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-6">
+                                            <label>Contact</label>
+                                            <input type="text" class="form-control" name="Contact"
+                                                   ng-model="data.Contact" ng-pattern="/^[6-9][0-9]{9}$/" required>
+                                            <div ng-messages="form.Contact.$error" style="color:red"
+                                                 ng-if="form.Contact.$touched"
+                                                 role="alert">
+                                                <div ng-message="required">Please Enter Contact Number</div>
+                                                <div ng-message="pattern">Please Enter Valid Contact Number</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-6">
+                                            <label>Email ID</label>
+                                            <input type="email" class="form-control" name="EmailID"
+                                                   ng-model="data.EmailID" required>
+                                            <div ng-messages="form.EmailID.$error" style="color:red"
+                                                 ng-if="form.EmailID.$touched"
+                                                 role="alert">
+                                                <div ng-message="required">Please Enter Email ID</div>
+                                                <div ng-message="email">Please Enter Valid Email ID</div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label>GST Number</label>
+                                            <input type="text" class="form-control" name="GSTNumber"
+                                                   ng-model="data.GSTNumber" ng-minlength="3" required>
+                                            <div ng-messages="form.GSTNumber.$error" style="color:red"
+                                                 ng-if="form.GSTNumber.$touched"
+                                                 role="alert">
+                                                <div ng-message="required">Please Enter GST Number</div>
+                                                <div ng-message="minlength">GST Number is too long</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4">
+                                            <label class="label-control" for="Country">Country: <span
+                                                        class="required"
+                                                        style="color:red">*</span>:
+                                            </label>
+                                            <ui-select ng-model="Country.$selected" theme="selectize"
+                                                       name="Country" id="Country" on-select="onCountrySelected($item)"
+                                                       required>
+                                                <ui-select-match placeholder="Select or search country in the list">
+                                                    {{$select.selected.name}}
+                                                </ui-select-match>
+                                                <ui-select-choices
+                                                        repeat="item.name as item in countries | filter: $select.search">
+                                                    <div ng-bind-html="item.name | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <div ng-messages="form.Country.$error" style="color:red"
+                                                 ng-if="form.Country.$touched"
+                                                 role="alert">
+                                                <div ng-message="required">Please Select Country</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-4">
+                                            <label class="label-control" for="customer">State: <span
+                                                        class="required"
+                                                        style="color:red">*</span>:
+                                            </label>
+                                            <ui-select ng-model="BranchOfficeState.selected" theme="selectize"
+                                                       name="BranchOfficeState" on-select="onStateSelected($item)"
+                                                       required>
+                                                <ui-select-match placeholder="Select or search state in the list">
+                                                    {{$select.selected}}
+                                                </ui-select-match>
+                                                <ui-select-choices repeat="item in states | filter: $select.search">
+                                                    <div ng-bind-html="item | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <div ng-messages="form.BranchOfficeState.$error" style="color:red"
+                                                 ng-if="form.BranchOfficeState.$touched"
+                                                 role="alert">
+                                                <div ng-message="required">Please Select State</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-4">
+                                            <label class="label-control" for="customer">City: <span
+                                                        class="required"
+                                                        style="color:red">*</span>:
+                                            </label>
+                                            <ui-select ng-model="BranchOfficeCity.selected" theme="selectize"
+                                                       name="BranchOfficeCity" on-select="onCitySelected($item)"
+                                                       required>
+                                                <ui-select-match placeholder="Select or search city in the list">
+                                                    {{$select.selected}}
+                                                </ui-select-match>
+                                                <ui-select-choices repeat="item in citiesList | filter: $select.search">
+                                                    <div ng-bind-html="item | highlight: $select.search"></div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <div ng-messages="form.BranchOfficeCity.$error" style="color:red"
+                                                 ng-if="form.BranchOfficeCity.$touched"
+                                                 role="alert">
+                                                <div ng-message="required">Please Select City</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-row ">
+                                        <!--ng-disabled="!form.$valid"-->
+                                        <button class="btn btn-success mx-auto" ng-click="saveDetails()">Save
+                                            Details
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <% include ../partials/footer.ejs %>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+
+<!-- Logout Modal-->
+<% include ../partials/logout.ejs %>
+
+<% include ../partials/bodyScriptLoader.ejs %>
+
+<script>
+    <% include ng-app.js %>
+</script>
+</body>
+
+</html>
